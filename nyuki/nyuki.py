@@ -12,6 +12,7 @@ from nyuki.config import (
     get_full_config, write_conf_json, merge_configs, DEFAULT_CONF_FILE
 )
 from nyuki.handlers import CapabilityHandler
+from nyuki.mqtt import MqttBus
 from nyuki.services import ServiceManager
 
 
@@ -62,6 +63,9 @@ class Nyuki(metaclass=CapabilityHandler):
         # Add bus service if in conf file
         if self._config.get('bus') is not None:
             self._services.add('bus', Bus(self))
+        # Add mqtt service if in conf file
+        if self._config.get('mqtt') is not None:
+            self._services.add('mqtt', MqttBus(self))
 
         self.is_stopping = False
 
