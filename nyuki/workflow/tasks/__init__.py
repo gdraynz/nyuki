@@ -6,6 +6,7 @@ from .report import ReportTask
 from .sleep import SleepTask
 from .task_selector import TaskSelector
 from .trigger_workflow import TriggerWorkflowTask
+from .webhook import WebhookTask
 
 
 # Generic schema to reference a task ID
