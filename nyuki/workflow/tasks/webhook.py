@@ -29,10 +29,40 @@ class WebhookTask(TaskHolder):
                     'properties': {
                         'method': {'type': 'string', 'enum': ['POST', 'PATCH']},
                         'url': {'type': 'string', 'minLength': 1},
+                        'parameters': {
+                            'type': 'array',
+                            'items': {
+                                'oneOf': [
+                                   {'$ref': '#/definitions/field'},
+                                   {'$ref': '#/definitions/literal'},
+                                ]
+                            }
+                        }
                     }
                 }
             },
         },
+        'definitions': {
+            'field': {
+                'type': 'object',
+                'required': ['type', 'value'],
+                'additionalProperties': False,
+                'properties': {
+                    'type': {'type': 'string', 'enum': ['field']},
+                    'value': {'type': 'string', 'minLength': 1},
+                }
+            },
+            'literal': {
+                'type': 'object',
+                'required': ['type', 'name', 'value'],
+                'additionalProperties': False,
+                'properties': {
+                    'type': {'type': 'string', 'enum': ['literal']},
+                    'name': {'type': 'string', 'minLength': 1},
+                    'value': {},
+                }
+            }
+        }
     }
 
     def __init__(self, config):
